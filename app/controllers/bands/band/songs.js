@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { Song } from '../../../routes/bands';
+import { Song } from 'rawre/routes/bands';
 
 export default class BandsBandSongsController extends Controller {
   @tracked showAddSong = true;
