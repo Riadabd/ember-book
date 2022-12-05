@@ -1,8 +1,8 @@
 import Route from '@ember/routing/route';
 
 export default class SongsRoute extends Route {
-    resetController(controller) {
-        controller.title = '';
-        controller.showAddSong = true;
-    }
+  resetController(controller) {
+    controller.title = '';
+    controller.showAddSong = true;
+  }
 }
