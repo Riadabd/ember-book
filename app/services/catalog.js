@@ -22,4 +22,9 @@ export default class CatalogService extends Service {
     get songs() {
         return this.storage.songs;
     }
+
+    find(type, filterFn) {
+        let collection = type === 'band' ? this.bands : this.songs;
+        return collection.find(filterFn);
+    }
 }
