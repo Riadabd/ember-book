@@ -11,7 +11,7 @@ export default class CatalogService extends Service {
     }
 
     add(type, record) {
-        let collection = type == 'band' ? this.storage.bands : this.storage.songs;
+        let collection = type === 'band' ? this.storage.bands : this.storage.songs;
         collection.push(record);
     }
 

@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { dasherize } from '@ember/string';
 import { tracked } from '@glimmer/tracking';
-import Band from 'rawre/model/band';
+import Band from 'rawre/models/band';
 import { inject as service } from '@ember/service';
 
 export default class BandsNewController extends Controller {
