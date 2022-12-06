@@ -12,6 +12,28 @@ export default class BandsBandSongsController extends Controller {
   @service catalog;
 
   @action
+  async updateRating(song, rating) {
+    song.rating = rating;
+    let payload = {
+      data: {
+        id: song.id,
+        type: 'songs',
+        attributes: {
+          rating,
+        },
+      },
+    };
+
+    await fetch(`http://json-api.rockandrollwithemberjs.com/songs/${song.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/vnd.api+json',
+      },
+      body: JSON.stringify(payload),
+    });
+  }
+
+  @action
   updateTitle(event) {
     this.title = event.target.value;
   }
@@ -43,7 +65,7 @@ export default class BandsBandSongsController extends Controller {
 
     let json = await response.json();
     let { id, attributes, relationships } = json.data;
-    
+
     let rels = {};
     for (let relationshipName in relationships) {
       rels[relationshipName] = relationships[relationshipName].links.related;
@@ -52,7 +74,7 @@ export default class BandsBandSongsController extends Controller {
     let song = new Song({ id, ...attributes }, rels);
     this.catalog.add('song', song);
     this.model.songs = [...this.model.songs, song];
-    
+
     this.title = '';
     this.showAddSong = true;
   }
