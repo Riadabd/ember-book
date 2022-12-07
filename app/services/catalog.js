@@ -13,20 +13,6 @@ function extractRelationships(object) {
   return relationships;
 }
 
-async function fetchRelated(record, relationship) {
-  let url = record.relationships[relationship];
-  let response = await fetch(url);
-  let json = await response.json();
-
-  if (isArray(json.data)) {
-    record[relationship] = this.loadAll(json);
-  } else {
-    record[relationship] = this.load(json);
-  }
-
-  return record[relationship];
-}
-
 export default class CatalogService extends Service {
   storage = {};
 
@@ -81,6 +67,20 @@ export default class CatalogService extends Service {
     }
 
     return record;
+  }
+
+  async fetchRelated(record, relationship) {
+    let url = record.relationships[relationship];
+    let response = await fetch(url);
+    let json = await response.json();
+
+    if (isArray(json.data)) {
+      record[relationship] = this.loadAll(json);
+    } else {
+      record[relationship] = this.load(json);
+    }
+
+    return record[relationship];
   }
 
   async create(type, attributes, relationships = {}) {
