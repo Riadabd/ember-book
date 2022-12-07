@@ -2,6 +2,7 @@ import Service from '@ember/service';
 import Band from 'rawre/models/band';
 import Song from 'rawre/models/song';
 import { tracked } from 'tracked-built-ins';
+import { isArray } from '@ember/array';
 
 function extractRelationships(object) {
   let relationships = {};
@@ -10,6 +11,20 @@ function extractRelationships(object) {
   }
 
   return relationships;
+}
+
+async function fetchRelated(record, relationship) {
+  let url = record.relationships[relationship];
+  let response = await fetch(url);
+  let json = await response.json();
+
+  if (isArray(json.data)) {
+    record[relationship] = this.loadAll(json);
+  } else {
+    record[relationship] = this.load(json);
+  }
+
+  return record[relationship];
 }
 
 export default class CatalogService extends Service {
