@@ -2,7 +2,6 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import fetch from 'fetch';
 
 export default class BandsBandSongsController extends Controller {
   @tracked showAddSong = true;
@@ -13,23 +12,7 @@ export default class BandsBandSongsController extends Controller {
   @action
   async updateRating(song, rating) {
     song.rating = rating;
-    let payload = {
-      data: {
-        id: song.id,
-        type: 'songs',
-        attributes: {
-          rating,
-        },
-      },
-    };
-
-    await fetch(`http://json-api.rockandrollwithemberjs.com/songs/${song.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/vnd.api+json',
-      },
-      body: JSON.stringify(payload),
-    });
+    this.catalog.update('song', song, { rating });
   }
 
   @action
