@@ -2,7 +2,7 @@
   {{#each this.bands as |item|}}
     <li class='mb-2 {{if item.isActive "border-purple-400 border-l-4 pl-2"}}'>
       <LinkTo @route='bands.band' @model={{item.band.id}}>
-        {{item.band.name}}
+        {{capitalize item.band.name}}
       </LinkTo>
     </li>
   {{/each}}
